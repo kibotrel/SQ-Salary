@@ -39,8 +39,8 @@ client.on('message', message => {
 		else if (request[0] === "help")
 		{
 			embedMessage.setDescription(`Here are the possible **commands** :\n\n\
-			- Register a new instance in the database\n\`${prefix} newInstance [player1-player2-...-playerN]\`\n\n\
-			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value\``);
+			- Register a new instance in the database\n\`${prefix} newInstance [player1-player2-...-playerN].\`\n\n\
+			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value.\``);
 			message.channel.send(embedMessage);
 		}
 		else if (request[0] === "newInstance")
@@ -71,7 +71,33 @@ client.on('message', message => {
 				message.channel.send("Instance **#" + instanceID + "** created!");
 				instanceID++;
 			}
+			else
+				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " newInstance [player1-player2-...-playerN]`.");
 		}
+		else if (request[0] === "addWorth")
+		{
+			if (typeof request[1] !== "undefined")
+			{
+				var userIndex	= playerList.indexOf(request[1]);
+
+				if (userIndex === -1)
+					message.channel.send("**Error:** The requested user didn't take part in any dungeon this week.");
+				else
+				{
+					if (typeof request[2] !== "undefined")
+					{
+						var	addedMoney = parseInt(request[2], 10);
+						player[userIndex].balanceWorth += addedMoney;
+						message.channel.send("Player **" + request[1] + " **gained **" + addedMoney + "P** worth of drop. This user's week net worth is now **" + player[userIndex].balanceWorth + "P**.");
+					}
+					else
+						message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " addWorth playerName value`.");
+				}
+			}
+			else
+				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " addWorth playerName value`.");
+		}
+	console.log(player);
 	}
 });
 client.login(process.env.DISCORD_TOKEN);
