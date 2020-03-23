@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var		major			= "0";
-var		minor			= ".0.2";
+var		minor			= ".1.0";
 var		prefix			= "!salary";
 
 var		instanceID		= 0;
@@ -63,7 +63,7 @@ client.on('message', message => {
 					if (userIndex === -1)
 					{
 						playerList.push(username);
-						player.push({name:username, instanceCount:1, balanceWorth:0});
+						player.push({name:username, instanceCount:1, grossWorth:0, netWorth:0});
 					}
 					else
 						player[userIndex].instanceCount++;
@@ -87,8 +87,8 @@ client.on('message', message => {
 					if (typeof request[2] !== "undefined")
 					{
 						var	addedMoney = parseInt(request[2], 10);
-						player[userIndex].balanceWorth += addedMoney;
-						message.channel.send("Player **" + request[1] + " **gained **" + addedMoney + "P** worth of drop. This user's week net worth is now **" + player[userIndex].balanceWorth + "P**.");
+						player[userIndex].grossWorth += addedMoney;
+						message.channel.send("Player **" + request[1] + " **gained **" + addedMoney + "P** worth of drop. This user's week gross worth is now **" + player[userIndex].grossWorth + "P**.");
 					}
 					else
 						message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " addWorth playerName value`.");
