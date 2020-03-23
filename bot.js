@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var		major			= "0";
-var		minor			= ".1.0";
+var		minor			= ".3.0";
 var		prefix			= "!salary";
 
 var		instanceID		= 0;
@@ -20,12 +20,11 @@ client.on('message', message => {
 	embedMessage.setColor("#010101")
 				.setTitle("Salary Overview")
 				.setURL("https://github.com/kibotrel/SQ-Salary")
-				.setFooter("Bot v" + major + minor)
+				.setFooter("Bot v" + major + minor + " Alpha")
 				.setTimestamp();
 	if (message.content.startsWith(prefix))
 	{
 		var request	= message.content.substring(prefix.length).trim().split(" ");
-
 		for (i = 0; i < request.length; i++)
 		{
 			if (request[i] == 0)
@@ -35,7 +34,7 @@ client.on('message', message => {
 			}
 		}
 		if (!request.length)
-			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`");
+			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`.");
 		else if (request[0] === "help")
 		{
 			embedMessage.setDescription(`Here are the possible **commands** :\n\n\
@@ -45,6 +44,7 @@ client.on('message', message => {
 		}
 		else if (request[0] === "newInstance")
 		{
+			// Add another parameter to indicate a multiple retry instance value
 			if (typeof request[1] !== "undefined")
 			{
 				var	user	= request[1].split("-");
@@ -74,6 +74,7 @@ client.on('message', message => {
 			else
 				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " newInstance [player1-player2-...-playerN]`.");
 		}
+
 		else if (request[0] === "addWorth")
 		{
 			if (typeof request[1] !== "undefined")
@@ -97,7 +98,29 @@ client.on('message', message => {
 			else
 				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " addWorth playerName value`.");
 		}
-	console.log(player);
+		else if (request[0] === "weekOverview")
+		{
+			if (playerList.length > 0)
+			{
+				var playerDescription	= "";
+				var salaryDescription	= "";
+				var instanceDescription = "";
+				for (i = 0; i < playerList.length; i++)
+				{
+					playerDescription	+= (player[i].name + "\n");
+					instanceDescription += (player[i].instanceCount + "\n");
+					salaryDescription	+= "\u200B\n";
+				}
+				embedMessage.addFields(
+					{name:"Player", value:playerDescription, inline:true},
+					{name:"Instance participation", value:instanceDescription, inline:true},
+					{name:"Salary", value:salaryDescription, inline:true},
+				)
+				message.channel.send(embedMessage);
+			}
+		}
+		else
+			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`.");
 	}
 });
 client.login(process.env.DISCORD_TOKEN);
