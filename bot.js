@@ -5,12 +5,13 @@ require('dotenv').config();
 //ADD MULTIPLE RETRY INSTANCE
 
 var		major			= "0";
-var		minor			= ".3.0";
+var		minor			= ".5.1";
 var		prefix			= "!salary";
 
 var		purse			= 0;
 var		player			= [];
 var		instanceID		= 0;
+var		instanceEntries	= 0;
 var		playerList		= [];
 const	Discord			= require('discord.js');
 const	client  		= new Discord.Client();
@@ -43,16 +44,22 @@ client.on('message', message => {
 		else if (request[0] === "help")
 		{
 			embedMessage.setDescription(`Here are the possible **commands** :\n\n\
-			- Register a new instance in the database\n\`${prefix} newInstance [player1-player2-...-playerN]\`\n\n\
+			- Register a new instance in the database\n\`${prefix} newInstance player1-player2-...-playerN\`\n\n\
 			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value\`\n\n\
-			- Edit the balance value\n\`${prefix} addBalance value\``);
+			- Edit the balance value\n\`${prefix} addBalance value\`\n\n\
+			- Get an quick recap of the week\n\`${prefix} weekOverview\``);
 			message.channel.send(embedMessage);
 		}
 		else if (request[0] === "newInstance")
 		{
+			var	user		= [];
+			var username	= "";
+			var userIndex	= 0;
+			var	instanceTry	= 1;
+
 			if (typeof request[1] !== "undefined")
 			{
-				var	user	= request[1].split("-");
+				user = request[1].split("-");
 				for (i = 0; i < user.length; i++)
 				{
 					if (user[i] == 0)
@@ -61,25 +68,43 @@ client.on('message', message => {
 						i = 0;
 					}
 				}
-				var username;
 				for (username of user)
 				{
-					var userIndex	= playerList.indexOf(username);
-					if (userIndex === -1)
+					userIndex = playerList.indexOf(username);
+					if (typeof request[2] !== "undefined")
+						instanceTry = parseInt(request[2]);
+					if (instanceTry > 1)
 					{
-						playerList.push(username);
-						player.push({name:username, instanceCount:1, grossWorth:0, netWorth:0});
+						if (userIndex === -1)
+						{
+							playerList.push(username);
+							player.push({name:username, instanceCount:instanceTry, grossWorth:0, netWorth:0});
+						}
+						else
+							player[userIndex].instanceCount += instanceTry;
+						instanceEntries += instanceTry;
 					}
 					else
-						player[userIndex].instanceCount++;
+					{
+						if (userIndex === -1)
+						{
+							playerList.push(username);
+							player.push({name:username, instanceCount:1, grossWorth:0, netWorth:0});
+						}
+						else
+							player[userIndex].instanceCount++;
+						instanceEntries++;
+					}
 				}
-				message.channel.send("Instance **#" + instanceID + "** created!");
-				instanceID++;
+				if (instanceTry > 1)
+					message.channel.send("Instance **#" + instanceID + "** to **#" + (instanceID + instanceTry) + "** created!");
+				else
+					message.channel.send("Instance **#" + instanceID + "** created!");
+				instanceID += instanceTry;
 			}
 			else
 				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " newInstance [player1-player2-...-playerN]`.");
 		}
-
 		else if (request[0] === "addWorth")
 		{
 			if (typeof request[1] !== "undefined")
@@ -93,6 +118,7 @@ client.on('message', message => {
 					if (typeof request[2] !== "undefined")
 					{
 						var	addedMoney = parseInt(request[2], 10);
+
 						player[userIndex].grossWorth += addedMoney;
 						message.channel.send("Player **" + request[1] + " **gained **" + addedMoney + "P** worth of drop. This user's week gross worth is now **" + player[userIndex].grossWorth + "P**.");
 					}
@@ -107,20 +133,30 @@ client.on('message', message => {
 		{
 			if (playerList.length > 0)
 			{
-				var playerDescription	= "";
-				var salaryDescription	= "";
-				var instanceDescription = "";
+				var salaryPercent			= 0;
+				var playerDescription		= "";
+				var salaryDescription		= "";
+				var instanceDescription		= "";
+				var	participationPercent	= 0;
+
 				for (i = 0; i < playerList.length; i++)
 				{
+					salaryPercent = player[i].instanceCount / instanceEntries;
+					participationPercent = (player[i].instanceCount / instanceID) * 100;
+					player[i].netWorth = Math.floor(purse * salaryPercent) - player[i].grossWorth;
+					if (player[i].netWorth < 0)
+						player[i].netWorth = 0;
 					playerDescription	+= (player[i].name + "\n");
-					instanceDescription += (player[i].instanceCount + "\n");
-					salaryDescription	+= "\u200B\n";
+					instanceDescription += ("**" + player[i].instanceCount + "** (" + participationPercent.toFixed(2) + "%)\n");
+					salaryDescription	+= ("**" + player[i].netWorth.toFixed() + "P**\n");
 				}
 				embedMessage.addFields(
 					{name:"Player", value:playerDescription, inline:true},
 					{name:"Instance participation", value:instanceDescription, inline:true},
 					{name:"Salary", value:salaryDescription, inline:true},
-					{name:"Week purse", value:purse + "P"},
+					{name:"\u200B", value:"\u200B"},
+					{name:"Week purse", value: "**" + purse + "P**", inline:true},
+					{name:"Instances completed", value: "**" + instanceID + "**", inline:true},
 				)
 				message.channel.send(embedMessage);
 			}
