@@ -1,11 +1,16 @@
 require('dotenv').config();
 
+//ROLL DICE COMMAND
+//MODIFY PREFIX
+//ADD MULTIPLE RETRY INSTANCE
+
 var		major			= "0";
 var		minor			= ".3.0";
 var		prefix			= "!salary";
 
-var		instanceID		= 0;
+var		purse			= 0;
 var		player			= [];
+var		instanceID		= 0;
 var		playerList		= [];
 const	Discord			= require('discord.js');
 const	client  		= new Discord.Client();
@@ -38,13 +43,13 @@ client.on('message', message => {
 		else if (request[0] === "help")
 		{
 			embedMessage.setDescription(`Here are the possible **commands** :\n\n\
-			- Register a new instance in the database\n\`${prefix} newInstance [player1-player2-...-playerN].\`\n\n\
-			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value.\``);
+			- Register a new instance in the database\n\`${prefix} newInstance [player1-player2-...-playerN]\`\n\n\
+			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value\`\n\n\
+			- Edit the balance value\n\`${prefix} addBalance value\``);
 			message.channel.send(embedMessage);
 		}
 		else if (request[0] === "newInstance")
 		{
-			// Add another parameter to indicate a multiple retry instance value
 			if (typeof request[1] !== "undefined")
 			{
 				var	user	= request[1].split("-");
@@ -115,9 +120,24 @@ client.on('message', message => {
 					{name:"Player", value:playerDescription, inline:true},
 					{name:"Instance participation", value:instanceDescription, inline:true},
 					{name:"Salary", value:salaryDescription, inline:true},
+					{name:"Week purse", value:purse + "P"},
 				)
 				message.channel.send(embedMessage);
 			}
+			else
+				message.channel.send("**Error:** No data found for the on-going week.");
+		}
+		else if (request[0] === "addBalance")
+		{
+			if (typeof request[1] !== "undefined")
+			{
+				var	addedMoney = parseInt(request[1], 10);
+
+				purse += addedMoney;
+				message.channel.send("You've just added **" + addedMoney + "P** to the global purse. The purse now contains **" + purse + "P**.");
+			}
+			else
+				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " addBalance value`.");
 		}
 		else
 			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`.");
