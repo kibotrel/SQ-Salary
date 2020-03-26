@@ -1,10 +1,9 @@
 require('dotenv').config();
 
-//ROLL DICE COMMAND
 //BALANCE REDISTRIBUTION
 
 var		major			= "0";
-var		minor			= ".6.2";
+var		minor			= ".7.1";
 var		prefix			= "!salary";
 
 var		purse			= 0;
@@ -23,7 +22,6 @@ client.on('message', message => {
 	var	embedMessage	= new Discord.MessageEmbed();
 
 	embedMessage.setColor("#010101")
-				.setTitle("Salary Overview")
 				.setURL("https://github.com/kibotrel/SQ-Salary")
 				.setFooter("Bot v" + major + minor + " Alpha")
 				.setTimestamp();
@@ -47,6 +45,7 @@ client.on('message', message => {
 			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value\`\n\n\
 			- Edit the balance value\n\`${prefix} addBalance value\`\n\n\
 			- Modify the prefix tag\n\`${prefix} changePrefix newPrefix\`\n\n\
+			- Use RNG to roll a dice\n\`${prefix} diceRoll player1-player2-...-playerN [diceSides]\`\n\n\
 			- Get an quick recap of the week\n\`${prefix} weekOverview\``);
 			message.channel.send(embedMessage);
 		}
@@ -158,6 +157,7 @@ client.on('message', message => {
 					{name:"Week purse", value: "**" + purse + "P**", inline:true},
 					{name:"Instances completed", value: "**" + instanceID + "**", inline:true},
 				)
+				.setTitle("Salary Overview");
 				message.channel.send(embedMessage);
 			}
 			else
@@ -184,6 +184,54 @@ client.on('message', message => {
 			}
 			else
 				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " changePrefix newPrefix`.");
+		}
+		else if (request[0] === "diceRoll")
+		{
+			var	user		= [];
+			var roll		= 0;
+			var	winner		= "";
+			var	savedRoll	= 0;
+			var	numSides	= 100;
+			var username	= "";
+			var	rollValue	= "";
+			var	rollPlayers	= "";
+
+			if (typeof request[1] !== "undefined")
+			{
+				user		= request[1].split("-");
+				for (i = 0; i < user.length; i++)
+				{
+					if (user[i] == 0)
+					{
+						user.splice(i, 1);
+						i = 0;
+					}
+				}
+				if (typeof request[2] !== "undefined")
+					numSides = parseInt(request[2]);
+				for (username of user)
+				{
+					roll = Math.round(Math.random() * (numSides + 1));
+					rollValue += (roll + "\n");
+					rollPlayers += (username + "\n");
+					if (roll > savedRoll)
+					{
+					 	savedRoll = roll;
+						winner = username;
+					}
+				}
+				embedMessage.addFields(
+					{name:"Player", value:rollPlayers, inline:true},
+					{name:"Roll", value:rollValue, inline:true},
+					{name:"\u200B", value:"\u200B"},
+					{name:"Dice Range", value: "**0 to " + numSides + "**", inline:true},
+					{name:"Winner", value: "**" + winner + "**", inline:true},
+				)
+				.setTitle("Roll results");
+				message.channel.send(embedMessage);
+			}
+			else
+				message.channel.send("**Undefined argument(s)!**. Use: `" + prefix + " player1-player2-...-playerN [diceSides]`.");
 		}
 		else
 			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`.");
