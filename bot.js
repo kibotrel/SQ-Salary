@@ -1,11 +1,10 @@
 require('dotenv').config();
 
 //ROLL DICE COMMAND
-//MODIFY PREFIX
-//ADD MULTIPLE RETRY INSTANCE
+//BALANCE REDISTRIBUTION
 
 var		major			= "0";
-var		minor			= ".5.1";
+var		minor			= ".6.2";
 var		prefix			= "!salary";
 
 var		purse			= 0;
@@ -43,10 +42,11 @@ client.on('message', message => {
 			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`.");
 		else if (request[0] === "help")
 		{
-			embedMessage.setDescription(`Here are the possible **commands** :\n\n\
-			- Register a new instance in the database\n\`${prefix} newInstance player1-player2-...-playerN\`\n\n\
+			embedMessage.setDescription(`Here are the possible **commands**, arguments in brackets are optional:\n\n\
+			- Register a new instance in the database\n\`${prefix} newInstance player1-player2-...-playerN [runAmount]\`\n\n\
 			- Edit the drop worth of a player\n\`${prefix} addWorth playerName value\`\n\n\
 			- Edit the balance value\n\`${prefix} addBalance value\`\n\n\
+			- Modify the prefix tag\n\`${prefix} changePrefix newPrefix\`\n\n\
 			- Get an quick recap of the week\n\`${prefix} weekOverview\``);
 			message.channel.send(embedMessage);
 		}
@@ -174,6 +174,16 @@ client.on('message', message => {
 			}
 			else
 				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " addBalance value`.");
+		}
+		else if (request[0] === "changePrefix")
+		{
+			if (typeof request[1] !== "undefined")
+			{
+				message.channel.send("**Command prefix Successfuly updated!** Use `" + request[1] + "` to interract with the bot now.");
+				prefix = request[1];
+			}
+			else
+				message.channel.send("**Undefined argument(s)!** Use: `" + prefix + " changePrefix newPrefix`.");
 		}
 		else
 			message.channel.send("**Undefined command!**. Use: `" + prefix + " help`.");
