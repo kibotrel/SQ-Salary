@@ -3,7 +3,7 @@ require('dotenv').config();
 //BALANCE REDISTRIBUTION
 
 var		major			= "0";
-var		minor			= ".7.1";
+var		minor			= ".7.4";
 var		prefix			= "!salary";
 
 var		purse			= 0;
@@ -25,6 +25,8 @@ client.on('message', message => {
 				.setURL("https://github.com/kibotrel/SQ-Salary")
 				.setFooter("Bot v" + major + minor + " Alpha")
 				.setTimestamp();
+	if (!message.member.hasPermission("ADMINISTRATOR"))
+		return;
 	if (message.content.startsWith(prefix))
 	{
 		var request	= message.content.substring(prefix.length).trim().split(" ");
@@ -72,6 +74,11 @@ client.on('message', message => {
 					userIndex = playerList.indexOf(username);
 					if (typeof request[2] !== "undefined")
 						instanceTry = parseInt(request[2]);
+					if (Number.isNaN(instanceTry) || instanceTry < 1)
+					{
+						message.channel.send("**Error:** ivalid number of instances.");
+						return ;
+					}
 					if (instanceTry > 1)
 					{
 						if (userIndex === -1)
@@ -117,7 +124,12 @@ client.on('message', message => {
 					if (typeof request[2] !== "undefined")
 					{
 						var	addedMoney = parseInt(request[2], 10);
-
+						
+						if (Number.isNaN(addedMoney) || addedMoney < 1)
+						{
+							message.channel.send("**Error:** invalid amount requested.");
+							return ;
+						}
 						player[userIndex].grossWorth += addedMoney;
 						message.channel.send("Player **" + request[1] + " **gained **" + addedMoney + "P** worth of drop. This user's week gross worth is now **" + player[userIndex].grossWorth + "P**.");
 					}
@@ -136,6 +148,7 @@ client.on('message', message => {
 				var playerDescription		= "";
 				var salaryDescription		= "";
 				var instanceDescription		= "";
+				var dropAmount			= "";
 				var	participationPercent	= 0;
 
 				for (i = 0; i < playerList.length; i++)
@@ -147,7 +160,8 @@ client.on('message', message => {
 						player[i].netWorth = 0;
 					playerDescription	+= (player[i].name + "\n");
 					instanceDescription += ("**" + player[i].instanceCount + "** (" + participationPercent.toFixed(2) + "%)\n");
-					salaryDescription	+= ("**" + player[i].netWorth.toFixed() + "P**\n");
+					salaryDescription	+= ("**" + player[i].netWorth.toFixed() + "P** (" + player[i].grossWorth + ")\n");
+					dropAmount += ("**" + player[i].grossWorth + "P**\n");
 				}
 				embedMessage.addFields(
 					{name:"Player", value:playerDescription, inline:true},
@@ -169,6 +183,11 @@ client.on('message', message => {
 			{
 				var	addedMoney = parseInt(request[1], 10);
 
+				if (Number.isNaN(addedMoney) || addedMoney <= 0)
+				{
+					message.channel.send("**Error:** invalid amount requested.");
+					return ;
+				}
 				purse += addedMoney;
 				message.channel.send("You've just added **" + addedMoney + "P** to the global purse. The purse now contains **" + purse + "P**.");
 			}
@@ -238,3 +257,4 @@ client.on('message', message => {
 	}
 });
 client.login(process.env.DISCORD_TOKEN);
+
