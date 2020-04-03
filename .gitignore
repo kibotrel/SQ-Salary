@@ -1,2 +1,3 @@
-.env
-.txt
+# Javascript and node.js related stuff
+node_modules
+package-lock.json
