@@ -1,3 +1,11 @@
 # Javascript and node.js related stuff
 node_modules
 package-lock.json
+
+# Where credentials are stored
+private
+
+#Authentification and critical informations
+config.json
+*.pem
+*.ppk
