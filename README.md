@@ -2,7 +2,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/sq-salary/badge)](https://www.codefactor.io/repository/github/kibotrel/sq-salary) ![GitHub](https://img.shields.io/github/license/kibotrel/SQ-Salary) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kibotrel/SQ-Salary?include_prereleases)
 
-This project is a DiscordBot application built using few **node.js** modules ([discord.js](https://discord.js.org/#/docs/main/stable/general/welcome) and [dotenv](https://www.npmjs.com/package/dotenv)) meant to simplify dungeon profits splitting between people.
+This project is a DiscordBot application built using few **node.js** modules ([discord.js](https://discord.js.org/#/docs/main/stable/general/welcome) of course, [better-sqlite3](https://www.npmjs.com/package/better-sqlite3/v/4.1.2), [enmap](https://www.npmjs.com/package/enmap) and [node.js filesystem](https://nodejs.org/api/fs.html#fs_file_system)) meant to simplify dungeon profits splitting between people.
 
 ## Install
 
@@ -13,13 +13,17 @@ $> git clone https://github.com/kibotrel/SQ-Salary.git
 $> cd SQ-Salary
 ```
 
-If you want to host this bot on your own you need an extra file that isn't uploaded here for security purposes : a file named `.env` that stores the **Bot API Token**. You simply have to add this file at repository's root and add this line to it:
+If you want to host this bot on your own you need an extra file that isn't uploaded here for security purposes : a file named `config.json` in a directory called `private` that stores the **Bot API Token** and some other stuff. You need to fill this file as follow:
 
-```
-DISCORD_TOKEN='insert the bot token here'
+```json
+{
+	"token": "INSERT DISCORD BOT TOKEN HERE",
+	"prefix": "!salary",
+	"version": "0.0.0"
+}
 ```
 
-How do you get this token ? Fist, follow [this guide](https://discordpy.readthedocs.io/en/latest/discord.html) to create a new Discord application, attach a bot user and add it to a server. Then on [Discord Developer Portal](https://discordapp.com/developers/applications) under your brand new application settings menu, go back to the **Bot** sub-section and copy-paste **Token** to `.env` where it belongs and keep this file private.
+How do you get **token**? Fist, follow [this guide](https://discordpy.readthedocs.io/en/latest/discord.html) to create a new Discord application, attach a bot user and add it to a server. Then on [Discord Developer Portal](https://discordapp.com/developers/applications) under your brand new application settings menu, go back to the **Bot** sub-section and copy-paste **Token** to `./private/config.json` to the right field. Don't touch to **version** field, it will be replaced by the package version afterwards. If you know what you're doing, you can modify **prefix** to anything you want, it is used to interract with the bot and reduce the amount of data the bot need to deal with.
 
 ![API Token](/screenshots/screen0.png)
 
@@ -45,7 +49,7 @@ You can see what can interract with the bot using message based commands. Each c
 
 ![commands](/screenshots/screen1.png)
 
-this list is retrievable by sending `PREXIF help` in any channel of the server.
+this list is retrievable by sending `!salary help` by default in any channel of the server where the bot is.
 
 ## Credits
 
@@ -53,3 +57,5 @@ this list is retrievable by sending `PREXIF help` in any channel of the server.
 * [Simple discordBot tutorial](https://medium.com/davao-js/2019-tutorial-creating-your-first-simple-discord-bot-47fc836a170b)
 * [W3Schools javascript ressources](https://www.w3schools.com/js/)
 * [Node.js v13.12.0 documentation](https://nodejs.org/docs/latest-v13.x/api/)
+* [Enmap tutorial](https://enmap.evie.dev/install)
+* [Javascript modules](https://js.evie.dev/modules)
