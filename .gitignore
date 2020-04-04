@@ -4,6 +4,7 @@ package-lock.json
 
 # Where credentials are stored
 private
+data
 
 #Authentification and critical informations
 config.json
