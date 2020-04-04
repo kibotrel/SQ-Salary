@@ -11,8 +11,7 @@ const	package = require("./package.json");
 //Setup the Discord interface to communicate with.
 const	Discord = require("discord.js");
 const	client = new Discord.Client();
-client.config = config;
-client.config.version = package.version;
+client.botVersion = package.version;
 client.commands = new Enmap();
 
 //Modular setup.
@@ -24,8 +23,7 @@ client.settings = new Enmap({
 })
 
 //Load event handlers.
-fs.readdir("./events/", (error, files) =>
-{
+fs.readdir("./events/", (error, files) => {
 	if (error)
 		return console.error(error);
 	files.forEach(file =>
@@ -43,8 +41,7 @@ fs.readdir("./events/", (error, files) =>
 });
 
 //Load command functions.
-fs.readdir("./commands/", (error, files) =>
-{
+fs.readdir("./commands/", (error, files) => {
 	if (error)
 		return console.error(error);
 	files.forEach(file =>
