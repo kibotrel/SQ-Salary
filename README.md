@@ -18,12 +18,11 @@ If you want to host this bot on your own you need an extra file that isn't uploa
 ```json
 {
 	"token": "INSERT DISCORD BOT TOKEN HERE",
-	"prefix": "!salary",
-	"version": "0.0.0"
+	"prefix": "!salary"
 }
 ```
 
-How do you get **token**? Fist, follow [this guide](https://discordpy.readthedocs.io/en/latest/discord.html) to create a new Discord application, attach a bot user and add it to a server. Then on [Discord Developer Portal](https://discordapp.com/developers/applications) under your brand new application settings menu, go back to the **Bot** sub-section and copy-paste **Token** to `./private/config.json` to the right field. Don't touch to **version** field, it will be replaced by the package version afterwards. If you know what you're doing, you can modify **prefix** to anything you want, it is used to interract with the bot and reduce the amount of data the bot need to deal with.
+How do you get **token**? Fist, follow [this guide](https://discordpy.readthedocs.io/en/latest/discord.html) to create a new Discord application, attach a bot user and add it to a server. Then on [Discord Developer Portal](https://discordapp.com/developers/applications) under your brand new application settings menu, go back to the **Bot** sub-section and copy-paste **Token** to `./private/config.json` to the right field. If you know what you're doing, you can modify **prefix** to anything you want, it is used to interract with the bot and reduce the amount of data the bot need to deal with.
 
 ![API Token](/screenshots/screen0.png)
 
