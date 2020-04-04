@@ -37,6 +37,11 @@ exports.addServer = (serverID, serverName) => {
 	return this.table[this.table.length - 1];
 }
 
+//Retrieve the table index of the requested sever.
+exports.getServer = (serverID) => {
+	return databaseIndex(this.table, "id", serverID);
+}
+
 //Retrieve the current amount of dungeons cleared for the given server.
 exports.getTotalDungeons = (serverID) => {
 	return this.table[databaseIndex(this.table, "id", serverID)].instanceCount;
@@ -73,6 +78,22 @@ exports.updateDungeons = (serverID, instanceTry) => {
 
 	this.table[index].instanceCount += instanceTry;
 	return this.table[index].instanceCount;
+}
+
+//Determine the salary of a given player in requested server.
+exports.updateNetWorth = (serverID, username, salaryPercent) => {
+	const	serverIndex = databaseIndex(this.table, "id", serverID);
+	const	playerIndex = databaseIndex(this.table[serverIndex].player, "name", username);
+
+	this.table[serverIndex].player[playerIndex].netWorth = Math.floor(this.table[serverIndex].purse * salaryPercent);
+	this.table[serverIndex].player[playerIndex].netWorth -= this.table[serverIndex].player[playerIndex].grossWorth;
+	this.table[serverIndex].player[playerIndex].netWorth.toFixed();
+	//Prevent negative values
+	if (this.table[serverIndex].player[playerIndex].netWorth < 0)
+	{
+		this.table[serverIndex].player[playerIndex].netWorth = 0;
+	}
+	return this.table[serverIndex].player[playerIndex].netWorth;
 }
 
 //Retrieve the current prefix for the given server.
