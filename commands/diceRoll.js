@@ -3,15 +3,6 @@ const	Discord = require("discord.js");
 const	Database = require("../database.js");
 
 exports.run = (client, message, args) => {
-	//Create an embedded message to display roll results.
-	var	embeddedMessage = new Discord.MessageEmbed();
-
-	embeddedMessage.setColor("#010101")
-	.setURL("https://github.com/kibotrel/SQ-Salary")
-	.setFooter(`Bot v${client.botVersion} Alpha`)
-	.setTimestamp()
-	.setTitle("Roll results");
-
 	//Retrieve the right prefix sequence.
 	const	prefix = Database.getPrefix(message.guild.id);
 
@@ -21,6 +12,15 @@ exports.run = (client, message, args) => {
 		message.channel.send(`**Undefined argument(s)!**. Use: \`${prefix} diceRoll player1-player2-...-playerN [diceSides]\`.`);
 		return ;
 	}
+
+	//Create an embedded message to display roll results.
+	var	embeddedMessage = new Discord.MessageEmbed();
+
+	embeddedMessage.setColor("#010101")
+	.setURL("https://github.com/kibotrel/SQ-Salary")
+	.setFooter(`Bot v${client.botVersion} Alpha`)
+	.setTimestamp()
+	.setTitle("Roll results");
 
 	//Split the list of player and define the number of faces on the dice.
 	const	users = args[0].split(/-+/g);
