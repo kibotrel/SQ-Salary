@@ -1,38 +1,41 @@
-//Load Discord API.
+//Load Discord API and database informations
 const	Discord = require("discord.js");
+const	Database = require("../database.js");
 
-exports.run = (client, message, args) =>
-{
+exports.run = (client, message, args) => {
 	//Create an embedded message to display roll results.
 	var	embeddedMessage = new Discord.MessageEmbed();
 
 	embeddedMessage.setColor("#010101")
 	.setURL("https://github.com/kibotrel/SQ-Salary")
-	.setFooter(`Bot v${client.config.version} Alpha`)
+	.setFooter(`Bot v${client.botVersion} Alpha`)
 	.setTimestamp()
 	.setTitle("Roll results");
+
+	//Retrieve the right prefix sequence.
+	const	prefix = Database.getPrefix(message.guild.id);
 
 	//Check if the user provided a name list.
 	if (typeof args[0] === "undefined")
 	{
-		message.channel.send(`**Undefined argument(s)!**. Use: \`${client.config.prefix} player1-player2-...-playerN [diceSides]\`.`);
+		message.channel.send(`**Undefined argument(s)!**. Use: \`${prefix} diceRoll player1-player2-...-playerN [diceSides]\`.`);
 		return ;
 	}
 
 	//Split the list of player and define the number of faces on the dice.
-	const	users = args[0].split(/\-+/g);
+	const	users = args[0].split(/-+/g);
 	const	possibilities = (typeof args[1] === "undefined" ? 100 : parseInt(args[1]));
 
 	//Analyze user input to avoid unexpected behaviours.
-	if (users.length <= 2)
+	if (users.length < 2)
 	{
 		message.channel.send(`**Error:** specify at least two players.`);
 		return ;
 	}
-	if (possibilities <= 1)
+	if (Number.isNaN(possibilities) || possibilities < 2)
 	{
-		message.channel.send(`**Error:** the dice should have at least two sides.`);
-		return ;
+		message.channel.send(`**Error:** invalid side amount.`);
+		return;
 	}
 
 	//Roll the dice, find the winner and fill the results in the embedded message fields.
