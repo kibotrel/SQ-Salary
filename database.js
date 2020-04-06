@@ -104,19 +104,21 @@ exports.updateNetWorth = (serverID, username) => {
 	const	playerIndex = databaseIndex(this.table[serverIndex].player, "name", username);
 
 	this.table[serverIndex].player[playerIndex].salaryPercent = this.table[serverIndex].player[playerIndex].runs / this.table[serverIndex].totalParticipation;
-	this.table[serverIndex].player[playerIndex].netWorth = Math.floor(this.table[serverIndex].purse * this.table[serverIndex].player[playerIndex].salaryPercent);
-	this.table[serverIndex].player[playerIndex].netWorth -= this.table[serverIndex].player[playerIndex].grossWorth;
-	this.table[serverIndex].player[playerIndex].netWorth.toFixed();
-	//Prevent negative values
-	if (this.table[serverIndex].player[playerIndex].netWorth < 0)
+	if (this.table[serverIndex].player[playerIndex].runs >= this.table[serverIndex].minimumParticipation)
 	{
-		this.table[serverIndex].player[playerIndex].netWorth = 0;
+		this.table[serverIndex].player[playerIndex].netWorth = Math.floor(this.table[serverIndex].purse * this.table[serverIndex].player[playerIndex].salaryPercent);
+		this.table[serverIndex].player[playerIndex].netWorth -= this.table[serverIndex].player[playerIndex].grossWorth;
+		this.table[serverIndex].player[playerIndex].netWorth.toFixed();
+		//Prevent negative values
+		if (this.table[serverIndex].player[playerIndex].netWorth < 0)
+		{
+			this.table[serverIndex].player[playerIndex].netWorth = 0;
+		}
 	}
-
 	return this.table[serverIndex].player[playerIndex].netWorth;
 }
 
-//update the gross value of taken item by the given player.
+//Update the gross value of taken item by the given player.
 exports.updateGrossWorth = (serverID, username, value) => {
 	const	serverIndex = databaseIndex(this.table, "id", serverID);
 	const	playerIndex = databaseIndex(this.table[serverIndex].player, "name", username);
@@ -124,6 +126,15 @@ exports.updateGrossWorth = (serverID, username, value) => {
 	this.table[serverIndex].player[playerIndex].grossWorth += value;
 
 	return this.table[serverIndex].player[playerIndex].grossWorth;
+}
+
+//Update the participation threshold to earn salary.
+exports.updateMinimumParticipartion = (serverID, value) => {
+	const	serverIndex = databaseIndex(this.table, "id", serverID);
+
+	this.table[serverIndex].minimumParticipation = value;
+
+	return this.table[serverIndex].minimumParticipation;
 }
 
 //Retrieve the current prefix for the given server.
@@ -148,4 +159,17 @@ exports.changePrefix = (serverID, newPrefix) => {
 	this.table[index].prefix = newPrefix;
 
 	return this.table[index].prefix;
+}
+
+//Reset server data.
+exports.resetServer = (serverID) => {
+	const	index = databaseIndex(this.table, "id", serverID);
+
+	this.table[index].player = [];
+	this.table[index].purse = 0;
+	this.table[index].instanceCount = 0;
+	this.table[index].totalParticipation = 0;
+	this.table[index].minimumParticipation = 0;
+
+	return this.table[index];
 }
