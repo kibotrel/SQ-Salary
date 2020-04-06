@@ -115,6 +115,7 @@ exports.updateNetWorth = (serverID, username) => {
 			this.table[serverIndex].player[playerIndex].netWorth = 0;
 		}
 	}
+	
 	return this.table[serverIndex].player[playerIndex].netWorth;
 }
 

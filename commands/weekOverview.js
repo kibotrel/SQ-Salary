@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
 	embeddedMessage.addFields(
 	{name:"Player", value: `**${playerList.map(e => e.name).join("\n")}**`, inline:true},
 	{name:"Instance participation", value: `**${playerList.map(e => e.runs).join("\n")}**`, inline:true},
-	{name:"Salary", value: `**${playerList.map(e => `${e.netWorth}P`).join("\n")}**`, inline:true},
+	{name:"Salary", value: `${playerList.map(e => `**${e.netWorth}P** (${e.grossWorth}P)`).join("\n")}`, inline:true},
 	{name:"\u200B", value:"\u200B"},
 	{name:"Week purse", value: `**${server.purse}P**`, inline:true},
 	{name:"Total participation", value: `**${server.totalParticipation}**`, inline:true},

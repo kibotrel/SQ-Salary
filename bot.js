@@ -5,13 +5,13 @@ const	fs = require("fs");
 const	Enmap = require("enmap");
 
 //Store usefull onfiguration infos and bot token.
-const	config = require("./private/config.json");
-const	package = require("./package.json");
+const	Config = require("./private/config.json");
+const	Package = require("./package.json");
 
 //Setup the Discord interface to communicate with.
 const	Discord = require("discord.js");
 const	client = new Discord.Client();
-client.botVersion = package.version;
+client.botVersion = Package.version;
 client.commands = new Enmap();
 
 //Modular setup.
@@ -66,4 +66,4 @@ fs.readdir("./commands/", (error, files) => {
 });
 
 //Login the bot into the requested server.
-client.login(config.token);
+client.login(Config.token);
