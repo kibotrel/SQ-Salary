@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
 
 	if (typeof args[1] !== "undefined")
 	{
-		instanceTry = parseInt(args[1]);
+		instanceTry = parseInt(args[1], 10);
 		if (Number.isNaN(instanceTry) || instanceTry < 1)
 		{
 			message.channel.send(`**Error:** invalid dungeon amount.`);
