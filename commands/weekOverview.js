@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
 		message.channel.send("**Error:** No data found for the on-going week.");
 		return ;
 	}
-
+ 
 	//Create an embedded message to display the on-going week data.
 	var		embeddedMessage = new Discord.MessageEmbed();
 

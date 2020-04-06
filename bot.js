@@ -25,14 +25,17 @@ client.settings = new Enmap({
 //Load event handlers.
 fs.readdir("./events/", (error, files) => {
 	if (error)
-		return console.error(error);
-	files.forEach(file =>
 	{
+		return console.error(error);
+	}
+	files.forEach(file => {
     	if (!file.endsWith(".js"))
+		{
 			return ;
+		}
 
-    	const	event = require(`./events/${file}`);
 		var		option = file.split(".")[0];
+    	const	event = require(`./events/${file}`);
 
 		console.log(`Loading ${option} handler.`);
     	client.on(option, event.bind(null, client));
@@ -43,14 +46,17 @@ fs.readdir("./events/", (error, files) => {
 //Load command functions.
 fs.readdir("./commands/", (error, files) => {
 	if (error)
-		return console.error(error);
-	files.forEach(file =>
 	{
+		return console.error(error);
+	}
+	files.forEach(file => {
     	if (!file.endsWith(".js"))
+		{
 			return ;
+		}
 
+    	var	command = file.split(".")[0];
     	var	definition = require(`./commands/${file}`);
-    	let	command = file.split(".")[0];
 
 		console.log(`Loading ${command} definition.`);
     	client.commands.set(command, definition);
