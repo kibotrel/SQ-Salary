@@ -37,9 +37,14 @@ exports.addServer = (serverID, serverName) => {
 	return this.table[this.table.length - 1];
 }
 
-//Retrieve the table index of the requested sever.
-exports.getServer = (serverID) => {
+//Retrieve the table index of the requested server.
+exports.getServerIndex = (serverID) => {
 	return databaseIndex(this.table, "id", serverID);
+}
+
+//Retrieve player index of the given server.
+exports.getPlayerIndex = (serverID, username) => {
+	return databaseIndex(this.table[databaseIndex(this.table, "id", serverID)].player, "name", username);
 }
 
 //Retrieve the current amount of dungeons cleared for the given server.
@@ -70,6 +75,8 @@ exports.updatePlayer = (serverID, username, instanceTry) => {
 
 	//Update the global participation for salary computation.
 	this.table[serverIndex].totalParticipation += instanceTry;
+
+	return this.table[serverIndex].totalParticipation;
 }
 
 //Update the dungeon amount done on the requested server.
@@ -77,6 +84,7 @@ exports.updateDungeons = (serverID, instanceTry) => {
 	const	index = databaseIndex(this.table, "id", serverID);
 
 	this.table[index].instanceCount += instanceTry;
+
 	return this.table[index].instanceCount;
 }
 
@@ -93,7 +101,18 @@ exports.updateNetWorth = (serverID, username, salaryPercent) => {
 	{
 		this.table[serverIndex].player[playerIndex].netWorth = 0;
 	}
+
 	return this.table[serverIndex].player[playerIndex].netWorth;
+}
+
+//update the gross value of taken item by the given player.
+exports.updateGrossWorth = (serverID, username, value) => {
+	const	serverIndex = databaseIndex(this.table, "id", serverID);
+	const	playerIndex = databaseIndex(this.table[serverIndex].player, "name", username);
+
+	this.table[serverIndex].player[playerIndex].grossWorth += value;
+
+	return this.table[serverIndex].player[playerIndex].grossWorth;
 }
 
 //Retrieve the current prefix for the given server.
@@ -106,5 +125,6 @@ exports.changePrefix = (serverID, newPrefix) => {
 	const	index = databaseIndex(this.table, "id", serverID);
 
 	this.table[index].prefix = newPrefix;
+
 	return this.table[index].prefix;
 }
