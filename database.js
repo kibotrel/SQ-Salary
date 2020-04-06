@@ -72,7 +72,8 @@ exports.updatePlayer = (serverID, username, instanceTry) => {
 			name: username,
 			runs: instanceTry,
 			grossWorth: 0,
-			netWorth : 0
+			netWorth: 0,
+			salaryPercent: 0
 		}
 
 		this.table[serverIndex].player.push(newPlayer);
@@ -98,11 +99,12 @@ exports.updateDungeons = (serverID, instanceTry) => {
 }
 
 //Determine the salary of a given player in requested server.
-exports.updateNetWorth = (serverID, username, salaryPercent) => {
+exports.updateNetWorth = (serverID, username) => {
 	const	serverIndex = databaseIndex(this.table, "id", serverID);
 	const	playerIndex = databaseIndex(this.table[serverIndex].player, "name", username);
 
-	this.table[serverIndex].player[playerIndex].netWorth = Math.floor(this.table[serverIndex].purse * salaryPercent);
+	this.table[serverIndex].player[playerIndex].salaryPercent = this.table[serverIndex].player[playerIndex].runs / this.table[serverIndex].totalParticipation;
+	this.table[serverIndex].player[playerIndex].netWorth = Math.floor(this.table[serverIndex].purse * this.table[serverIndex].player[playerIndex].salaryPercent);
 	this.table[serverIndex].player[playerIndex].netWorth -= this.table[serverIndex].player[playerIndex].grossWorth;
 	this.table[serverIndex].player[playerIndex].netWorth.toFixed();
 	//Prevent negative values
@@ -127,6 +129,16 @@ exports.updateGrossWorth = (serverID, username, value) => {
 //Retrieve the current prefix for the given server.
 exports.getPrefix = (serverID) => {
 	return this.table[databaseIndex(this.table, "id", serverID)].prefix;
+}
+
+//Retrieve all the information stored for the given server.
+exports.getServer = (serverID) => {
+	return this.table[databaseIndex(this.table, "id", serverID)];
+}
+
+//Retrieve the player list of the given server.
+exports.getPlayerList = (serverID) => {
+	return this.table[databaseIndex(this.table, "id", serverID)].player;
 }
 
 //Update the requested server prefix.

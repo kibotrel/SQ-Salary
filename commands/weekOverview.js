@@ -22,20 +22,24 @@ exports.run = (client, message, args) => {
 	.setTitle("Salary Overview");
 
 	//Compute salary for each player registered in the server database.
-	var		salaryPercent;
-
 	for (i = 0; i < Database.table[serverID].player.length; i++)
 	{
-		salaryPercent = Database.table[serverID].player[i].runs / Database.table[serverID].totalParticipation;
-		Database.updateNetWorth(message.guild.id,  Database.table[serverID].player[i].name, salaryPercent);
+		Database.updateNetWorth(message.guild.id, Database.table[serverID].player[i].name);
 	}
+
+	//Sort the player list by personnal participation then bt ASCII order and display the results.
+	const	server = Database.getServer(message.guild.id);
+	const	playerList = Database.getPlayerList(message.guild.id);
+
+	playerList.sort((a, b) => (a.runs < b.runs) ? 1 : (a.runs === b.runs) ? ((a.name > b.name) ? 1 : -1) : -1);
+	console.log(playerList);
 	embeddedMessage.addFields(
-	{name:"Player", value: `**${Database.table[serverID].player.map(e => e.name).join("\n")}**`, inline:true},
-	{name:"Instance participation", value: `**${Database.table[serverID].player.map(e => e.runs).join("\n")}**`, inline:true},
-	{name:"Salary", value: `**${Database.table[serverID].player.map(e => e.netWorth).join("\n")}**`, inline:true},
+	{name:"Player", value: `**${playerList.map(e => e.name).join("\n")}**`, inline:true},
+	{name:"Instance participation", value: `**${playerList.map(e => e.runs).join("\n")}**`, inline:true},
+	{name:"Salary", value: `**${playerList.map(e => `${e.netWorth}P`).join("\n")}**`, inline:true},
 	{name:"\u200B", value:"\u200B"},
-	{name:"Week purse", value: `**${Database.table[serverID].purse}**`, inline:true},
-	{name:"Total participation", value: `**${Database.table[serverID].totalParticipation}**`, inline:true},
+	{name:"Week purse", value: `**${server.purse}P**`, inline:true},
+	{name:"Total participation", value: `**${server.totalParticipation}**`, inline:true},
 	)
 	message.channel.send(embeddedMessage);
 }
