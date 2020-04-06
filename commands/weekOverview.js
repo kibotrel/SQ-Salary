@@ -4,14 +4,14 @@ const	Database = require("../database.js");
 
 exports.run = (client, message, args) => {
 	//Check if there are informations for the current server loaded in database
-	const	serverID = Database.getServer(message.guild.id);
+	const	serverID = Database.getServerIndex(message.guild.id);
 
 	if (Database.table[serverID].player.length === 0)
 	{
 		message.channel.send("**Error:** No data found for the on-going week.");
 		return ;
 	}
- 
+
 	//Create an embedded message to display the on-going week data.
 	var		embeddedMessage = new Discord.MessageEmbed();
 
