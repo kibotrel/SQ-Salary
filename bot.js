@@ -24,6 +24,7 @@ client.settings = new Enmap({
 
 //Load event handlers.
 fs.readdir("./events/", (error, files) => {
+	console.log(`Loading event handlers...\n`);
 	if (error)
 	{
 		return console.error(error);
@@ -37,14 +38,15 @@ fs.readdir("./events/", (error, files) => {
 		var		option = file.split(".")[0];
     	const	event = require(`./events/${file}`);
 
-		console.log(`Loading ${option} handler.`);
     	client.on(option, event.bind(null, client));
     	delete require.cache[require.resolve(`./events/${file}`)];
+		console.log(`\t${option} handler: OK.`);
 	});
 });
 
 //Load command functions.
 fs.readdir("./commands/", (error, files) => {
+	console.log(`\nLoading command definitions...\n`);
 	if (error)
 	{
 		return console.error(error);
@@ -58,8 +60,8 @@ fs.readdir("./commands/", (error, files) => {
     	var	command = file.split(".")[0];
     	var	definition = require(`./commands/${file}`);
 
-		console.log(`Loading ${command} definition.`);
     	client.commands.set(command, definition);
+		console.log(`\t${command} definition: OK.`);
 	});
 });
 
