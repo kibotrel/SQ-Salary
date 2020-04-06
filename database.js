@@ -52,6 +52,15 @@ exports.getTotalDungeons = (serverID) => {
 	return this.table[databaseIndex(this.table, "id", serverID)].instanceCount;
 }
 
+//Update the requested server purse.
+exports.updatePurse = (serverID, value) => {
+	const	serverIndex = databaseIndex(this.table, "id", serverID);
+
+	this.table[serverIndex].purse += value;
+
+	return this.table[serverIndex].purse;
+}
+
 //Update per server player profile or create it if no information is found.
 exports.updatePlayer = (serverID, username, instanceTry) => {
 	const	serverIndex = databaseIndex(this.table, "id", serverID);
