@@ -1,9 +1,9 @@
-//Load Discord API and database informations
+//Load Discord API and database informations.
 const	Discord = require("discord.js");
 const	Database = require("../database.js");
 
 exports.run = (client, message, args) => {
-	//Check if there are informations for the current server loaded in database
+	//Check if there are informations for the current server loaded in database.
 	const	serverID = Database.getServerIndex(message.guild.id);
 
 	if (Database.table[serverID].player.length === 0)

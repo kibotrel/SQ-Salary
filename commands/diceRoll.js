@@ -1,4 +1,4 @@
-//Load Discord API and database informations
+//Load Discord API and database informations.
 const	Discord = require("discord.js");
 const	Database = require("../database.js");
 
