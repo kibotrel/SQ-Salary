@@ -20,6 +20,8 @@ exports.run = (client, message, args) => {
 	- Edit the balance value\n\`${prefix} addBalance value\`\n\n\
 	- Modify the prefix tag\n\`${prefix} changePrefix newPrefix\`\n\n\
 	- Use RNG to roll a dice\n\`${prefix} diceRoll player1-player2-...-playerN [diceSides]\`\n\n\
-	- Get a quick recap of the week\n\`${prefix} weekOverview\``);
+	- Get a quick recap of the week\n\`${prefix} weekOverview\`\n\n\
+	- Configure the participation threshold\n\`${prefix} setParticipation value\`\n\n\
+	- Wipe the current week informations\n\`${prefix} resetData\``);
 	message.channel.send(embeddedMessage);
 }
