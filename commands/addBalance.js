@@ -22,5 +22,5 @@ exports.run = (client, message, args) => {
 
 	const	newPurse = Database.updatePurse(message.guild.id, addedMoney);
 
-	message.channel.send(`You've just added **${addedMoney}P** to the server purse. The purse now contains ${newPurse}P**.`);
+	message.channel.send(`You've just added **${addedMoney}P** to the server purse. The purse now contains **${newPurse}P**.`);
 }
