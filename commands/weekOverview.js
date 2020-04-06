@@ -32,7 +32,6 @@ exports.run = (client, message, args) => {
 	const	playerList = Database.getPlayerList(message.guild.id);
 
 	playerList.sort((a, b) => (a.runs < b.runs) ? 1 : (a.runs === b.runs) ? ((a.name > b.name) ? 1 : -1) : -1);
-	console.log(playerList);
 	embeddedMessage.addFields(
 	{name:"Player", value: `**${playerList.map(e => e.name).join("\n")}**`, inline:true},
 	{name:"Instance participation", value: `**${playerList.map(e => e.runs).join("\n")}**`, inline:true},
