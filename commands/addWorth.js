@@ -24,12 +24,12 @@ exports.run = (client, message, args) => {
 	//Check user input once again to avoid unexpected behaviours.
 	const	addedMoney = parseInt(args[1], 10);
 
-	if (Number.isNaN(addedMoney))
+	if (Number.isNaN(addedMoney) || addedMoney < 1)
 	{
-		message.channel.send(`**Undefined argument(s)!** Use: \`${prefix} addWorth playerName value\`.`);
+		message.channel.send(`**Error:** invalid amount requested.`);
 		return ;
 	}
-	
+
 	const	newWorth = Database.updateGrossWorth(message.guild.id, args[0], addedMoney);
 
 	message.channel.send(`Player **${args[0]}** gained **${addedMoney}P** worth of drop. This user's week gross worth is now **${newWorth}P**.`);
