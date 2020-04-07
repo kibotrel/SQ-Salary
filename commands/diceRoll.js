@@ -34,7 +34,7 @@ exports.run = (client, message, args) => {
 
 	embeddedMessage.setColor("#010101")
 	.setURL("https://github.com/kibotrel/SQ-Salary")
-	.setFooter(`Bot v${client.botVersion} Alpha`)
+	.setFooter(`Bot v${client.botVersion} Beta`)
 	.setTimestamp()
 	.setTitle("Roll results");
 
