@@ -10,7 +10,7 @@ exports.run = (client, message) => {
 	var	embeddedMessage = new Discord.MessageEmbed();
 
 	embeddedMessage.setColor("#010101")
-	.setURL("https://github.com/kibotrel/SQ-Salary")
+	.setURL("https://www.patreon.com/demonwaves")
 	.setFooter(`Bot v${client.botVersion} Beta`)
 	.setTimestamp()
 	.setTitle("Help pannel")
@@ -22,6 +22,7 @@ exports.run = (client, message) => {
 	- Use RNG to roll a dice\n\`${prefix} diceRoll player1-player2-...-playerN [diceSides]\`\n\n\
 	- Get a quick recap of the week\n\`${prefix} weekOverview\`\n\n\
 	- Configure the participation threshold\n\`${prefix} setParticipation value\`\n\n\
-	- Wipe the current week informations\n\`${prefix} resetData\``);
+	- Wipe the current week informations\n\`${prefix} resetData\`\n\n\
+	- Get informations on the bot availability\n\`${prefix} patreon\``);
 	message.channel.send(embeddedMessage);
 }

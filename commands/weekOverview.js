@@ -16,7 +16,7 @@ exports.run = (client, message, args) => {
 	var		embeddedMessage = new Discord.MessageEmbed();
 
 	embeddedMessage.setColor("#010101")
-	.setURL("https://github.com/kibotrel/SQ-Salary")
+	.setURL("https://www.patreon.com/demonwaves")
 	.setFooter(`Bot v${client.botVersion} Beta`)
 	.setTimestamp()
 	.setTitle("Salary Overview");
