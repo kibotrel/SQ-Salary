@@ -1,6 +1,10 @@
 # SQ-Salary
 
-[![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/sq-salary/badge)](https://www.codefactor.io/repository/github/kibotrel/sq-salary) ![GitHub](https://img.shields.io/github/license/kibotrel/SQ-Salary) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kibotrel/SQ-Salary?include_prereleases) ![Discord](https://img.shields.io/discord/691082369976762368?logo=discord)
+
+[![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/sq-salary/badge/master?s=da9cb332188d9b758350ecfbbb0cfb3ceb1991ca)](https://www.codefactor.io/repository/github/kibotrel/sq-salary/overview/master)
+<a href="https://github.com/kibotrel/SQ-Salary/blob/master/LICENSE" alt="License"><img src="https://img.shields.io/github/license/kibotrel/SQ-Salary" /></a>
+<a href="https://github.com/kibotrel/SQ-Salary/releases" alt="Release"><img src="https://img.shields.io/github/v/release/kibotrel/SQ-Salary?include_prereleases" /></a>
+<a href="https://discord.gg/NRSTQuX" alt="Discord"><img src="https://img.shields.io/discord/691082369976762368?logo=discord" /></a>
 
 This project is a DiscordBot application built using few **node.js** modules ([discord.js](https://discord.js.org/#/docs/main/stable/general/welcome) of course, [better-sqlite3](https://www.npmjs.com/package/better-sqlite3/v/4.1.2), [enmap](https://www.npmjs.com/package/enmap) and [node.js filesystem](https://nodejs.org/api/fs.html#fs_file_system)) meant to simplify dungeon profits splitting between people.
 
@@ -13,7 +17,7 @@ First clone the repository using:
 ```shell
 $> git clone https://github.com/kibotrel/SQ-Salary.git
 $> cd SQ-Salary
-```
+```M
 
 If you want to host this bot on your own you need an extra file that isn't uploaded here for security purposes : a file named `config.json` in a directory called `private` that stores the **Bot API Token** and some other stuff. You need to fill this file as follow:
 
