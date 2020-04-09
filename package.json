@@ -1,6 +1,6 @@
 {
   "name": "SQ-Salary",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "A small DiscordBot used to split money from dungeons between players depending on their participation",
   "main": "bot.js",
   "private": true,
