@@ -17,7 +17,7 @@ First clone the repository using:
 ```shell
 $> git clone https://github.com/kibotrel/SQ-Salary.git
 $> cd SQ-Salary
-```M
+```
 
 If you want to host this bot on your own you need an extra file that isn't uploaded here for security purposes : a file named `config.json` in a directory called `private` that stores the **Bot API Token** and some other stuff. You need to fill this file as follow:
 
