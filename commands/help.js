@@ -2,7 +2,7 @@
 const	Discord = require("discord.js");
 const	Database = require("../database.js");
 
-exports.run = (client, message, args) => {
+exports.run = (client, message) => {
 	//Retrieve the right prefix sequence.
 	const	prefix = Database.getPrefix(message.guild.id);
 
