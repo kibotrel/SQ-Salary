@@ -6,7 +6,10 @@ package-lock.json
 private
 data
 
-#Authentification and critical informations
+# Authentification and critical informations
 config.json
 *.pem
 *.ppk
+
+# Other files
+*.txt
