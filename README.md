@@ -1,8 +1,10 @@
 # SQ-Salary
 
-[![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/sq-salary/badge)](https://www.codefactor.io/repository/github/kibotrel/sq-salary) ![GitHub](https://img.shields.io/github/license/kibotrel/SQ-Salary) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kibotrel/SQ-Salary?include_prereleases)
+[![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/sq-salary/badge)](https://www.codefactor.io/repository/github/kibotrel/sq-salary) ![GitHub](https://img.shields.io/github/license/kibotrel/SQ-Salary) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kibotrel/SQ-Salary?include_prereleases) ![Discord](https://img.shields.io/discord/691082369976762368?logo=discord)
 
 This project is a DiscordBot application built using few **node.js** modules ([discord.js](https://discord.js.org/#/docs/main/stable/general/welcome) of course, [better-sqlite3](https://www.npmjs.com/package/better-sqlite3/v/4.1.2), [enmap](https://www.npmjs.com/package/enmap) and [node.js filesystem](https://nodejs.org/api/fs.html#fs_file_system)) meant to simplify dungeon profits splitting between people.
+
+If you want to support SQ-Salary's development, you can help me out and become a [Patron](https://www.patreon.com/demonwaves).
 
 ## Install
 
@@ -44,11 +46,11 @@ $> node bot.js
 
 ### Features
 
-You can see what can interract with the bot using message based commands. Each command is prefixed by a string to avoid being recognized by other applications **(You must be administrator to interract with the bot for now on)**, by default this prefix is set to `!salary` and can be changed through interractions with the bot. Here is the list of available commands:
+You can see what can interract with the bot using message based commands. Each command is prefixed by a string to avoid being recognized by other applications, by default this prefix is set to `!salary` and can be changed through interractions with the bot. Here is the list of available commands:
 
 ![commands](/screenshots/screen1.png)
 
-this list is retrievable by sending `!salary help` by default in any channel of the server where the bot is.
+this list is retrievable by sending `!salary help` by default in any channel of the server where the bot is allowed to send messages.
 
 ## Credits
 
