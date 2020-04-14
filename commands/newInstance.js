@@ -26,13 +26,11 @@ exports.run = (client, message, args) => {
 	}
 
 	//Update each player informations. Create a new profile if no information is found.
-	var		name;
-
 	for (name of users)
 	{
 		Database.updatePlayer(message.guild.id, name, instanceTry);
 	}
-	
+
 	const	oldRun = Database.getTotalDungeons(message.guild.id);
 	const	newRun = oldRun + instanceTry - 1;
 

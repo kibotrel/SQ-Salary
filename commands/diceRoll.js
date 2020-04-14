@@ -44,14 +44,14 @@ exports.run = (client, message, args) => {
 	var		winner = "";
 	var		rollResults = [];
 
-	for (i = 0; i < users.length; i++)
+	for (name of users)
 	{
 		let	roll = Math.random() * (possibilities + 1);
 
 		rollResults.push(Math.round(roll));
 		if (roll > bestRoll)
 		{
-			winner = users[i];
+			winner = name;
 			bestRoll = roll;
 		}
 	}
